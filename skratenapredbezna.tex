@@ -1,0 +1,245 @@
+% Metódy inžinierskej práce
+
+\documentclass[10pt,twoside,slovak,a4paper]{article}
+
+\usepackage[slovak]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[IL2]{fontenc} % lepšia sadzba písmena Ľ než v T1
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{url} % príkaz \url na formátovanie URL
+\usepackage{hyperref} % odkazy v texte budú aktívne (pri niektorých triedach dokumentov spôsobuje posun textu)
+
+\usepackage{cite}
+\usepackage{times}
+
+\pagestyle{headings}
+
+\title{Vývoj zvukových kodekov\thanks{Prerdbežná verzia článku semestrálneho projektu v predmete Metódy inžinierskej práce, ak. rok 2021/22, vedenie: Hlib Kokin}} 
+
+\author{Hlib Kokin\\[2pt]
+	{\small Slovenská technická univerzita v Bratislave}\\
+	{\small Fakulta informatiky a informačných technológií}\\
+	{\small \texttt{xkokin@stuba.sk}}
+	}
+
+\date{\small 19. oktobra 2021} 
+
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\ldots
+\end{abstract}
+
+
+
+\section{Úvod}
+
+Tento článok bude hovoriť o zvukových kodekoch. %рассказывать от лица статьи
+
+ Článok sa  začiná všeobecnými pojmami o zvukových kodekoch a ich histórii v časti ~\ref{pokrok}, potom si povie o základoch stratového kódovania zvuku(v časti ~\ref{základy}) a princípoch zvuku bluetooth(v časti ~\ref{bluetooth}). Neskôr v článku budeme analyzovať rozdiely medzi AUX a bluetooth(časť ~\ref{rozdiel}) a ku koncu v článku bude anályza modernych systémov reprodukcie zvuku(časť ~\ref{hodnotenie}). 
+
+
+
+\section{Pokrok vyvoja kodekov} \label{pokrok}
+
+Táto časť článku bude hovoriť o základných pojmoch o kodekoch ~\ref{čo}, histórii ich vývoja~\ref{historia}, zmienime o kodekoch, ktoré sú dnes populárne~\ref{dnes}. %Na konci bude popis ideálneho kodeku budúcnosti~\ref{buducnosť}. 
+
+\subsection{Čo sú zvukové kodaky} \label{čo}
+
+"Codec" je skratka pre encode/decode. Môžu byť hardvérové alebo softvérové – obe prijímajú analógový signál a konvertujú ho do digitálneho formátu. Funkcia dekódovania je presne ten istý proces, ale obrátený, aby sa digitálny dátový tok mohol previesť na analógové zvukové vlny na výstup.
+
+Existujú tri kategórie kodekov: nekomprimovaný, stratový a bezstratový a podrobné vysvetlenie o nich bude popísané v časti~\ref{typy}.
+
+\subsection{Fakty z histórie vývoja kodekov} \label{historia}
+
+Od prvého známeho zvukového záznamu v roku 1860 na fonautografe sa technológia záznamu a prehrávania zvuku neustále mení. 20. storočie prinieslo éru profesionálnych zvukových nahrávačov a inžinierov, vek prenosu zvuku cez rádiové vlny, obrovský pokrok v kvalite a technológii zvuku a pokračujúci rast v audio priemysle – a obchode vo všeobecnosti.
+
+V roku 1982 urobil svet zvuku prvé kroky do nového tisícročia s vôbec prvým digitálnym audio formátom – kompaktným diskom. CD, postavené na prelomovej technológii Pulse Code Modulation (PCM), dokázalo uložiť analógové zvukové vlny ako digitálne hodnoty ich „kvantovaním“ na ich najbližšiu podporovanú digitálnu hodnotu.
+
+Modulácia pulzného kódu odštartovala novú éru inovácií pre digitálne audio formáty. V priebehu desiatich rokov si známe moderné kodeky ako MP3 a WAV získavali trakciu. Začiatkom roku 2000 došlo k prvej vlne bezstratových zvukových kodekov, ktoré priniesli digitálnu kvalitu ešte vyššie bez kompromisov veľkých veľkostí súborov.
+
+Ale tieto vynikajúce formáty neboli pripravené na šialenstvo MP3 prehrávačov zo začiatku tisícročia. iPod od Apple priviedol masy do sveta digitálneho zvuku a MP3 sa stal celosvetovým štandardom pre prehrávanie zvuku.
+
+Aký kodek je po smrti MP3 najlepšie pripravený nahradiť ho? Aké možnosti prináša moderná technológia potenciálu budúcich audio kodekov?  
+
+\subsection{Dnešné kodeky} \label{dnes}
+
+V súčasnosti sa v mnohých odvetviach používa veľa zvukových kodekov. Mnoho záznamov v tomto zozname bolo predstavených pred desaťročiami, existuje však niekoľko nových kodekov, ktoré osvetľujú potenciál, ktorý budúcnosť zvukových kodekov ponúka. 
+
+\begin{itemize}
+\item AMR — Adaptive Multi-Rate.
+
+Rodina kodekov AMR je jedným z najpoužívanejších zvukových formátov na svete. Je to z veľkej časti preto, že ide de facto o zvukový štandard mobilných telefónov. AMR je optimalizovaný pre reč, čo znamená, že ide o kodek nízkej kvality s nízkou šírkou pásma a nízkou latenciou. AMR nebolo vyvinuté pre hudbu alebo vysokokvalitné nahrávanie alebo prehrávanie zvuku. 
+
+\item FLAC — Fully Lossless Audio Codec.
+
+FLAC mnohí považujú za lepšiu verziu MP3. Komprimuje súbory na pozoruhodne malé veľkosti a robí to bez akejkoľvek vnímanej straty kvality zvuku. Súbory FLAC sú veľmi ľahké a všestranné a možno ich prehrávať na akomkoľvek zariadení, ktoré dokáže prehrávať súbory MP3. A je to open-source, ktorý v mojej knihe vyhráva všetky druhy ocenení, najmä implementácie kodeku a jeho funkcií od tretích strán. 
+
+\item WAV — Waveform Audio File Format.
+
+Waveform Audio File Format, bežne skrátený na WAV, je ťahúňom priemyslu už takmer tri desaťročia. Tajomstvo jeho lepiacej sily je jednoduchosť a trvanlivosť kodeku. WAV vo všeobecnosti ponúkajú jedny z najkvalitnejších nekomprimovaných zvukov bez potreby transkódovania. Jeho stabilita znamená, že často sa súbory WAV, ktoré boli poškodené alebo poškodené, budú stále prehrávať.
+
+\item Opus.
+
+Opus je najmodernejší kodek na vytvorenie tohto zoznamu. Vydaný v roku 2012, bol vyvinutý tak, aby slúžil ako jeden štandard pre niekoľko aplikácií, ktorých bolo predtým niekoľko. Opus bol vytvorený s ohľadom na potreby moderného sveta – ústredným bodom jeho filozofie je vysokokvalitný zvuk s nízkou latenciou vhodný pre sieťovú komunikáciu a živé hudobné vystúpenia. Jeho latenciu možno znížiť až na 5 ms – väčšina ostatných kodekov dokáže v porovnaní s tým ponúknuť oneskorenie sotva 100 ms. 
+\end{itemize}
+
+Každý rok prináša nové variácie a príchute novej technológie kodekov, ale čo by sme mali hľadať v novom štandarde pre masovú distribúciu zvuku?
+
+\subsection{Budúcnosť modelovania kodekov} \label{buducnosť}
+
+Zatiaľ čo nespočetné množstvo formátov, z ktorých si dnes môžete vybrať, môže byť ohromujúce, je zrelý čas začať klásť očakávania na prichádzajúce kodeky. Z kodekov nedávnej i vzdialenejšej minulosti sa dá veľa naučiť. Spoľahlivá jednoduchosť a univerzálna funkčnosť WAV, úplne bezstratový open-source model FLAC, optimalizácia Opus pre hlas a všeobecný zvuk – technológia sa radikálne zmenila, tak prečo by nemali byť naše kodeky?
+
+
+
+Z obr.~\ref{f:rozhod} je všetko jasné. 
+
+%\begin{figure*}[tbh]
+%\centering
+%\includegraphics[scale=1.0]{diagram.pdf}
+%Aj text môže byť prezentovaný ako obrázok. Stane sa z neho označný plávajúci objekt. Po vytvorení diagramu zrušte znak \texttt{\%} pred príkazom \verb|\includegraphics| označte tento riadok ako komentár (tiež pomocou znaku \texttt{\%}).
+%\caption{Rozhodujúci argument.}
+%\label{f:rozhod}
+%\end{figure*}
+
+
+
+\section{Základy stratového kódovania zvuku.} \label{základy}
+
+%Základným problémom je teda\ldots{gftufuv} Najprv sa pozrieme na nejaké vysvetlenie (časť~\ref{ina:nejake}), a potom na ešte nejaké (časť~\ref{ina:nejake}).\footnote{Niekedy môžete potrebovať aj poznámku pod čiarou.}
+%Môže sa zdať, že problém vlastne nejestvuje\cite{Coplien:MPD}, ale bolo dokázané, že to tak nie je~\cite{Czarnecki:Staged, Czarnecki:Progress}. Napriek tomu, aj dnes na webe narazíme na všelijaké pochybné názory\cite{PLP-Framework}. Dôležité veci možno \emph{zdôrazniť kurzívou}.
+Táto časť začne informáciami o bezstratovom a bezkompresnom kódovaní~\ref{nekomp}. Ďalej sa pozrime na princípy stratových kodekov~\ref{strat} a bezstratových~\ref{bezstrat}.
+
+\subsection{Nekomprimované kódovanie} \label{nekomp}
+
+Nekomprimované zvukové súbory zakódujú celý vstupný zvukový signál do digitálneho formátu, ktorý je schopný uložiť celé zaťaženie prichádzajúcich údajov. Ponúkajú najvyššiu kvalitu a archivačné schopnosti, ktoré prichádzajú za cenu veľkých veľkostí súborov a vysokej latencie (prehrávanie nie v reálnom čase), čo v mnohých prípadoch znemožňuje ich široké použitie.
+
+Formát WAV (WAVE) zachováva zvukovú stopu v jej skutočnej kvalite, bez akejkoľvek manipulácie so samotným zvukovým súborom.
+
+Aby sme mohli zaznamenať zvuk, musíme ho previesť na množinu núl a jednotiek. V prípade formátu WAV sa to nerobí najracionálnejšie: prichádzajúci zvukový tok je rozdelený na najmenšie segmenty (kvantá, odtiaľ termín „vzorkovacia frekvencia“) a v každom takom časovom intervale aktuálna hodnota analógový signál je zapísaný v binárnej forme. Súbory WAV je možné nahrávať so vzorkovacou frekvenciou napríklad 8 kHz až 192 kHz, ale štandardom je 44,1 kHz.
+
+\subsection{Stratové kódovanie} \label{strat}
+
+Stratové súbory sú zakódované inak ako nekomprimované. Základná funkcia analógovo-digitálnej konverzie zostáva rovnaká v stratových technikách kódovania. Strata sa líši od nekomprimovanej, pretože frekvencia vstupných zvukových vĺn je vzorkovaná na približne podobnú digitálnu hodnotu. Súčet všetkých týchto možných digitálnych hodnôt dáva kodeku to, čo je známe ako jeho bitová hĺbka. Bitová hĺbka kodeku, najčastejšie 16-bitový alebo 24-bitový, určuje, ako presne sa zvuk „kvantuje“ – proces vzorkovania používaný na zaokrúhlenie prichádzajúcich zvukových vĺn na ich najbližšie hodnoty. Stratové kodeky zahadzujú značné množstvo informácií obsiahnutých v pôvodných zvukových vlnách. Z tohto dôvodu sú stratové zvukové súbory oveľa menšie ako nekomprimované a ponúkajú oveľa nižšiu latenciu prehrávania, čo umožňuje použitie v živých zvukových scenároch.
+
+\subsection{Bezstratové kódovanie}\label{bezstrat}
+
+Bezstratové kódovanie predstavuje strednú cestu medzi nekomprimovaným a stratovým. Poskytuje podobnú kvalitu zvuku ako nekomprimovaný pri výrazne zmenšenej veľkosti. Bezstratové kodeky to dosahujú komprimáciou prichádzajúceho zvuku nedeštruktívnym spôsobom pri kódovaní pred obnovením nekomprimovaných informácií pri dekódovaní.
+%\subsection{Nejaké vysvetlenie} \label{ina:nejake}
+%Niekedy treba uviesť zoznam:
+%\subsection{Ešte nejaké vysvetlenie} \label{ina:este}
+
+\section{Zvuk Bluetooth} \label{bluetooth}
+
+V tejto časti vám článok povie o základných informáciách o kodekoch bluetooth~\ref{zp}, ich dnešnom stave~\ref{sd} a o hlavných kodekoch~\ref{BKodeky}.
+
+\subsection{Základné pojmý zvuku Bluetooth} \label{zp}
+
+Funkčnú zložku Bluetooth definujú profily – špecifikácie konkrétnych funkcií. Streamovanie hudby Bluetooth sa vykonáva pomocou vysokokvalitného profilu jednosmerného prenosu zvuku A2DP. Štandard A2DP bol prijatý v roku 2003 a odvtedy sa dramaticky nezmenil.
+
+Existuje 5 hlavných zvukových kodekov Bluetooth, pomocou ktorých sa zvuk prenáša zo zdroja do slúchadiel (alebo reproduktorov) cez Bluetooth: SBC, AAC, aptX, aptX HD a LDAC
+
+\paragraph{Stav zvuku Bluetooth pre dnešok} \label{sd}
+
+Zvuk Bluetooth je vo všetkých kvalitatívnych parametroch stále citeľne horší ako káblový zvuk;
+Už v tejto fáze dokáže bezdrôtový zvuk s kvalitnými kodekmi uspokojiť potreby väčšiny používateľov.
+
+\subsection {Populárne bluetooth kodeky} \label{BKodeky}
+
+\begin{itemize}
+\item AptX HD - najoptimálnejší kodek Bluetooth.
+Vysoká bitová rýchlosť, ale neprenáša Hi Res zvuk vo vhodnej kvalite;
+
+\item AptX je populárny kodek Bluetooth.
+Široký frekvenčný rozsah, ale v "agresívnych podmienkach" je spoľahlivosť spojenia výrazne znížená.
+
+\item SBC je najbežnejší kodek Bluetooth.
+Podporované všetkými zariadeniami Bluetooth na prenos / príjem hudby, ale celkovo zlá kvalita zvuku.
+
+\item LDAC – kodek Bluetooth s vysokým rozlíšením.
+Maximálna bitová rýchlosť medzi kodekmi Bluetooth a
+Široký frekvenčný rozsah, ale nízka prevalencia a nestabilná komunikácia v režimoch 990 kbps a 660 kbps;
+
+\item AAC - Bluetooth kodek pre zariadenia Apple.
+Kompresný algoritmus zohľadňuje vlastnosti ľudského sluchu, ale celková kvalita je nižšia ako u iných kodekov.
+\end{itemize}
+
+
+
+\section{Aux vs. Bluetooth: Aký je rozdiel?} \label{rozdiel}
+
+V tejto časti sa dozviete o rozdieloch medzi AUX a Bluetooth v rôznych kategóriách: hlavné rozdiely`\ref{celkove}, pohodlie~\ref{poh}, kvalita zvuku~\ref{kvalita} a na konci padne verdikt~\ref{verdokt}, ktorý je lepší.
+
+\subsection{Celkové zistenia} \label{celkove}
+
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{p{5cm}cp{5cm}}
+    Aux
+\begin{itemize}
+\item
+Káblové, obmedzené na rozsah 3,5 mm kábla.
+
+\item
+Vynikajúca kvalita zvuku, hoci väčšina si nevšimne rozdiel.
+
+\item
+Nie je potrebné nastavovať, párovať alebo digitálne pripájať reproduktor alebo prehrávacie zariadenie.
+\end{itemize} & \hfill & Bluetooth
+\begin{itemize}
+\item
+Bezdrôtové, vo väčšine prípadov dosahujú až 10 metrov.
+
+\item
+Nižšia kvalita zvuku, ale väčšina si nevšimne rozdiel.
+
+\item
+Vyžaduje proces párovania, čo môže byť frustrujúce. 
+\end{itemize}
+\end{tabular}
+\end{table}
+
+\subsection{Pohodlie} \label{poh}
+
+Pripojenie telefónu k reproduktorovému systému pomocou kábla Aux je jednoduché a možno aj rýchlejšie, ale prítomnosť kábla obmedzuje dosah medzi zariadením a jeho hostiteľom. Nie je potrebné digitálne nastavovať pripojenie Aux. Potrebujete iba konektor pre slúchadlá, ktorý vedie zo zdroja zvuku do vstupu Aux na reproduktore alebo prijímači. Na rozdiel od zvuku Bluetooth však pripojenia Aux vyžadujú fyzický kábel, ktorý sa môže stratiť alebo poškodiť.
+
+Bluetooth je bezdrôtový štandard, ktorý umožňuje väčšiu slobodu pohybu medzi zariadením a jeho hostiteľom. Väčšina pripojení je účinná na vzdialenosti do 10 metrov. Niektoré prípady priemyselného použitia dosahujú až 100 metrov alebo viac. Pre audio v aute umožňujú pripojenia Bluetooth hands-free ovládanie prostredníctvom virtuálnych asistentov, ako je Siri. To vám tiež umožňuje uskutočňovať hovory bez použitia rúk, čo nemôžete robiť s pripojením Aux.
+
+\subsection{Kvalita zvuku} \label {kvalita}
+
+Zvuk Bluetooth sa vo všeobecnosti považuje za horší ako väčšina káblových zvukových pripojení vrátane 3,5 mm pripojení Aux. Dôvodom je skutočnosť, že odosielanie zvuku cez bezdrôtové pripojenie Bluetooth zahŕňa kompresiu digitálneho zvuku na analógový signál na jednom konci a jeho dekomprimáciu na digitálny signál na druhom konci. Táto konverzia má za následok menšiu stratu vernosti zvuku.
+
+Zatiaľ čo väčšina ľudí si nevšimne rozdiel, proces je v kontraste s pripojeniami Aux, ktoré sú analógové od konca po koniec. Digitálny analógový prevod vykonáva počítač alebo telefón, ktorý je hostiteľom zvuku. Aj keď je kvalita zvuku teoreticky lepšia, Aux má nevýhody. Pretože ide o fyzické spojenie, Aux káble majú tendenciu sa časom opotrebovať.
+
+\subsection{Konečný verdikt}\label{verdikt}
+
+Aux popisuje akékoľvek sekundárne audio pripojenie, ale najčastejšie sa vzťahuje na 3,5 mm konektor pre slúchadlá.
+
+Prídavné káble nie sú bez nevýhod, ale jednoduché analógové pohodlie je jedným z dôvodov, prečo sú tieto káble obľúbené. To znamená, že Bluetooth dobieha.
+
+Motiváciou Bluetooth bolo prísť s rýchlejšou, bezdrôtovou alternatívou k pripojeniu cez sériový port RS-232 pre osobné počítače v deväťdesiatych rokoch.
+
+Bluetooth nie je štandardný modul pre 3,5 mm konektor pre slúchadlá. Každý štandard má svoje základné prípady použitia, ale ako sa médiá stávajú bezdrôtovejšími a digitálnymi, stáva sa aj prípad Bluetooth presvedčivejším.
+
+
+\section{Subjektívne a objektívne hodnotenie vnímanej kvality zvuku súčasných systémov digitálneho vysielania zvuku a aplikácií na webový prenos } \label{hodnotenie}
+
+
+
+
+\section{Záver} \label{zaver} % prípadne iný variant názvu
+
+
+
+%\acknowledgement{Ak niekomu chcete poďakovať\ldots}
+
+
+% týmto sa generuje zoznam literatúry z obsahu súboru literatura.bib podľa toho, na čo sa v článku odkazujete
+%\bibliography{literatura}
+%\bibliographystyle{plain} % prípadne alpha, abbrv alebo hociktorý iný
+\end{document}
